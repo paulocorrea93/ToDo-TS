@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+import Styles from "./Footer.module.css";
 
 const Footer = () => {
   return (
-    <div>
-        <span>React + TS ToDo @2023</span>
+    <div className={Styles.footer}>
+      <p>
+        <span>React + TS ToDo </span> @2023
+      </p>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
