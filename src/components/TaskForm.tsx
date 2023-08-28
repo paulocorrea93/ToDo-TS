@@ -9,34 +9,45 @@ interface Props {
   taskList: ITask[];
   setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>;
   task?: ITask | null;
+  handleUpdate?(id: number, title: string, dificulty: number): void;
 }
 
-const TaskForm = ({ btnText, taskList, setTaskList, task }: Props) => {
+const TaskForm = ({
+  btnText,
+  taskList,
+  setTaskList,
+  task,
+  handleUpdate,
+}: Props) => {
   const [id, setId] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
   const [dificulty, setDificulty] = useState<number>(0);
 
   useEffect(() => {
-    if(task){
-      setId(task.id)
-      setTitle(task.title)
-      setDificulty(task.dificulty)
+    if (task) {
+      setId(task.id);
+      setTitle(task.title);
+      setDificulty(task.dificulty);
     }
-  }, [task])
+  }, [task]);
 
   const addTaskHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const id = Math.floor(Math.random() * 1000);
+    if (handleUpdate) {
+      handleUpdate(id, title, dificulty);
+    } else {
+      const id = Math.floor(Math.random() * 1000);
 
-    const newTask: ITask = { id, title, dificulty };
+      const newTask: ITask = { id, title, dificulty };
 
-    setTaskList!([...taskList, newTask]);
+      setTaskList!([...taskList, newTask]);
 
-    setTitle("");
-    setDificulty(0);
+      setTitle("");
+      setDificulty(0);
 
-    console.log(taskList);
+      console.log(taskList);
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
