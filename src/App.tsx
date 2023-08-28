@@ -17,14 +17,29 @@ function App() {
   const [taskList, setTaskList] = useState<ITask[]>([]);
 
   const deleteTask = (id: number) => {
-    setTaskList(taskList.filter((task) => {
-      return task.id !== id;
-    }))
-  }
+    setTaskList(
+      taskList.filter((task) => {
+        return task.id !== id;
+      })
+    );
+  };
+
+  const hideOrShow = (display: boolean) => {
+    const modal = document.querySelector("#modal");
+    if (display) {
+      modal!.classList.remove("hide");
+    } else {
+      modal!.classList.add("hide");
+    }
+  };
+
+  const editTask = (): void => {
+    hideOrShow(true);
+  };
 
   return (
     <div className="App">
-      <Modal children={<TaskForm btnText="Editar" taskList={taskList}/>}/>
+      <Modal children={<TaskForm btnText="Editar" taskList={taskList} />} />
       <Header />
       <div className={styles.main}>
         <div>
@@ -37,7 +52,7 @@ function App() {
         </div>
         <div>
           <h2>Suas Tarefas</h2>
-          <TaskList taskList={taskList} handleDelete={deleteTask} />
+          <TaskList taskList={taskList} handleDelete={deleteTask} handleEdit={editTask}/>
         </div>
       </div>
       <Footer />
